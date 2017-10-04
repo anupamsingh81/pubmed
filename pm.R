@@ -62,8 +62,11 @@ vitamin = c(rep("Vitamin A",57),rep("Vitamin C",57),rep("Vitamin D",57),rep("Vit
 df = data.frame(vitamin,publication_year,count)
 
 library(ggplot2)
-
-ggplot(df,aes(x=publication_year,y=count,group=vitamin))+geom_line(aes(color=vitamin))
+library(ggthemes)
+ggplot(df,aes(x=publication_year,y=count,group=vitamin))+geom_line(aes(color=vitamin))  + scale_x_continuous(breaks=seq(1960,2016,5))+theme_economist()+
+  labs(title = "The Rise and Fall Of Vitamin Research on Pubmed",
+subtitle = "Vitamin research exhibits decadal trends just like fads",
+caption = "Data from pubmed")
 
 library(tidyverse)
 df1 =df %>% group_by(publication_year,vitamin)  %>% spread(key = vitamin, value = count, fill=0) 
@@ -79,6 +82,62 @@ df3 =    mutate_all(df1[,2:5],funs(./row_sum)) %>% mutate(year = 1960:2016) %>% 
 
 library(ggthemes)
 
-ggplot(df3,aes(x=year,y=Proportion,group=vitamin))+geom_line(aes(color=vitamin)) + scale_x_continuous(breaks=seq(1960,2016,5))+theme_economist()
+ggplot(df3,aes(x=year,y=Proportion,group=vitamin))+geom_line(aes(color=vitamin)) + scale_x_continuous(breaks=seq(1960,2016,5))+theme_economist()+
+labs(title = "The Rise and Fall Of Vitamins",
+     subtitle = "Vitamin research exhibits decadal trends just like fads",
+     caption = "Data from pubmed.com")
 
 # Never use %>%  in ggplot otherwise cant coerce environment error
+
+
+save.image(file=".RData")
+
+rm(fetch)
+
+
+# EGDT
+
+library(rentrez)
+library(tidyverse)
+
+
+years <- 1990:2016
+
+papersa <- sapply(year, FUN= search_year, term="vitamin A", USE.NAMES=FALSE)
+
+papersd <- sapply(year, FUN= search_year, term="vitamin D", USE.NAMES=FALSE)
+
+paperse <- sapply(year, FUN= search_year, term="vitamin E", USE.NAMES=FALSE)
+
+papersc <- sapply(year, FUN= search_year, term="vitamin C", USE.NAMES=FALSE)
+
+
+pape
+  
+  
+ivc_filter= years %>% map_int(search_year,term="IVC Filter")
+
+
+
+insulin = years %>% map_int(search_year,term="insulin AND ICU")
+
+swan_ganz = years %>% map_int(search_year,term="swan ganz")
+
+swan_ganz
+
+vertebroplasty = years %>% map_int(search_year,term="vertebroplasty")
+vertebroplasty
+
+hrt = years %>% map_int(search_year,term="hormone replacement therapy")
+
+hrt
+
+mammography = years %>% map_int(search_year,term="mammography")
+
+
+mammography
+
+
+activated_protein_C = years %>% map_int(search_year,term="activated protein C")
+
+activated_protein_C
